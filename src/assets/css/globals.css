@@ -1,0 +1,23 @@
+@import url('~/assets/css/variables.css');
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../../fonts/DMSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'DM Sans Medium';
+  src: url('../../fonts/DMSans-Medium.ttf');
+}
+
+* {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-medium {
+  font-family: 'DM Sans Medium', sans-serif;
+}
+
+body {
+  background-color: var(--primary-background-color);
+}
