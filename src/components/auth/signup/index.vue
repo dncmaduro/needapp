@@ -8,7 +8,7 @@
         </UFormGroup>
 
         <UFormGroup label="Password" name="password" required class="w-full">
-          <UInput placeholder="Enter your password..." size="md" v-model="state.password" />
+          <CommonPasswordInput :model-value="state.password" placeholder="Enter your password..." />
         </UFormGroup>
 
         <UFormGroup label="Confirm your password" name="confirmation" required class="w-full">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLayout>
-      <SppedInsights />
+      <SpeedInsights />
       <NuxtLoadingIndicator />
       <NuxtPage />
     </NuxtLayout>

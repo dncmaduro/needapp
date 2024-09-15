@@ -8,11 +8,28 @@
         </UFormGroup>
 
         <UFormGroup label="Password" name="password" required class="w-full">
-          <CommonPasswordInput :model-value="state.password" placeholder="Enter your password..." />
+          <CommonPasswordInput
+            :model-value="state.password"
+            placeholder="Enter your password..."
+            @update="updatePassword"
+          />
         </UFormGroup>
 
         <div class="flex flex-col items-center gap-4">
-          <UButton type="submit" class="w-[200px] justify-center" size="md" label="Sign up" />
+          <UButton
+            type="submit"
+            class="w-[200px] justify-center"
+            size="md"
+            label="Sign in"
+            @click="
+              toast.add({
+                id: 'Login failed!',
+                title: 'Login failed!',
+                description: 'Wrong password!',
+                color: 'red'
+              })
+            "
+          />
           <nuxt-link to="/auth/signup">
             <span class="text-primary">Don't have account? Sign up now </span>
           </nuxt-link>
@@ -26,10 +43,16 @@
 import type { FormError } from '#ui/types'
 import type { SigninForm } from '~/types/auth/signin'
 
+const toast = useToast()
+
 const state = reactive<SigninForm>({
   email: '',
   password: ''
 })
+
+const updatePassword = (value: string) => {
+  state.password = value
+}
 
 const validate = (state: SigninForm): FormError[] => {
   const errors = []

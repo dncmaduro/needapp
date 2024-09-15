@@ -40,4 +40,12 @@ watch(
     localValue.value = newVal
   }
 )
+
+const emit = defineEmits<{
+  (e: 'update', value: string): void
+}>()
+
+watch(localValue, (newVal) => {
+  emit('update', newVal)
+})
 </script>
