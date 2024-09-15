@@ -7,7 +7,5 @@
 <script setup lang="ts">
 import type { LayoutsFooterItem } from '~/types/layouts/footer'
 
-const props = defineProps<LayoutsFooterItem>()
-
-console.log(props)
+defineProps<LayoutsFooterItem>()
 </script>
