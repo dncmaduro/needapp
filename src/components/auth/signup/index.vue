@@ -1,8 +1,8 @@
 <template>
   <UContainer class="my-8 flex flex-col items-center gap-8">
     <h1 class="text-4xl font-medium">Sign up</h1>
-    <div class="w-[600px]">
-      <UForm :state="state" :validate="validate" class="flex w-full flex-col items-center gap-8">
+    <div class="w-full max-w-[600px]">
+      <UForm :state="state" :validate="validate" class="mx-4 flex flex-col items-center gap-8">
         <UFormGroup label="Email" name="email" required class="w-full">
           <UInput placeholder="Enter your email..." size="md" v-model="state.email" />
         </UFormGroup>
