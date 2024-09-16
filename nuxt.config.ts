@@ -12,10 +12,31 @@ export default defineNuxtConfig({
       }
     ],
     '@nuxt/eslint',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxtjs/supabase',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt'
   ],
   colorMode: {
     preference: 'light'
+  },
+  pinia: {
+    storesDirs: ['~/store/**']
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+    redirect: false,
+    redirectOptions: {
+      login: '/auth/signin',
+      callback: '/auth/signin'
+    }
+  },
+  runtimeConfig: {
+    public: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_KEY: process.env.SUPABASE_KEY
+    }
   },
   devtools: { enabled: true },
   srcDir: 'src',
