@@ -2,21 +2,40 @@
   <UContainer class="my-8 flex flex-col items-center gap-8">
     <h1 class="text-4xl font-medium">Sign up</h1>
     <div class="w-full max-w-[600px]">
-      <UForm :state="state" :validate="validate" class="mx-4 flex flex-col items-center gap-8">
+      <UForm
+        :state="state"
+        :validate="validate"
+        class="mx-4 flex flex-col items-center gap-8"
+        @submit="handleSubmit"
+      >
         <UFormGroup label="Email" name="email" required class="w-full">
           <UInput placeholder="Enter your email..." size="md" v-model="state.email" />
         </UFormGroup>
 
         <UFormGroup label="Password" name="password" required class="w-full">
-          <CommonPasswordInput :model-value="state.password" placeholder="Enter your password..." />
+          <CommonPasswordInput
+            :model-value="state.password"
+            placeholder="Enter your password..."
+            @update="updatePassword"
+          />
         </UFormGroup>
 
         <UFormGroup label="Confirm your password" name="confirmation" required class="w-full">
-          <UInput placeholder="Enter your confirmation..." size="md" v-model="state.confirmation" />
+          <CommonPasswordInput
+            :model-value="state.confirmation"
+            placeholder="Confirm your password..."
+            @update="updateConfirmation"
+          />
         </UFormGroup>
 
         <div class="flex flex-col items-center gap-4">
-          <UButton type="submit" class="w-[200px] justify-center" size="md" label="Sign up" />
+          <UButton
+            type="submit"
+            class="w-[200px] justify-center"
+            size="md"
+            label="Sign up"
+            :loading="isLoading"
+          />
           <nuxt-link to="/auth/signin">
             <span class="text-primary">Have account? Sign in now </span>
           </nuxt-link>
@@ -30,11 +49,23 @@
 import type { FormError } from '#ui/types'
 import type { SignupForm } from '~/types/auth/signup'
 
+const isLoading = ref(false)
+
 const state = reactive<SignupForm>({
   email: '',
   password: '',
   confirmation: ''
 })
+
+const { signUp } = useAuth()
+
+const updatePassword = (value: string) => {
+  state.password = value
+}
+
+const updateConfirmation = (value: string) => {
+  state.confirmation = value
+}
 
 const validate = (state: SignupForm): FormError[] => {
   const errors = []
@@ -53,5 +84,11 @@ const validate = (state: SignupForm): FormError[] => {
       message: 'Confirmation password is not match with password!'
     })
   return errors
+}
+
+const handleSubmit = async () => {
+  isLoading.value = true
+  await signUp(state.email, state.password)
+  isLoading.value = false
 }
 </script>

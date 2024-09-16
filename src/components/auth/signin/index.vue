@@ -2,7 +2,12 @@
   <UContainer class="my-8 flex flex-col items-center gap-8">
     <h1 class="text-4xl font-medium">Sign in</h1>
     <div class="w-full max-w-[600px]">
-      <UForm :state="state" :validate="validate" class="mx-4 flex flex-col items-center gap-8">
+      <UForm
+        :state="state"
+        :validate="validate"
+        class="mx-4 flex flex-col items-center gap-8"
+        @submit="handleSubmit"
+      >
         <UFormGroup label="Email" name="email" required class="w-full">
           <UInput placeholder="Enter your email..." size="md" v-model="state.email" />
         </UFormGroup>
@@ -21,14 +26,7 @@
             class="w-[200px] justify-center"
             size="md"
             label="Sign in"
-            @click="
-              toast.add({
-                id: 'Login failed!',
-                title: 'Login failed!',
-                description: 'Wrong password!',
-                color: 'red'
-              })
-            "
+            :loading="isLoading"
           />
           <nuxt-link to="/auth/signup">
             <span class="text-primary">Don't have account? Sign up now </span>
@@ -44,6 +42,10 @@ import type { FormError } from '#ui/types'
 import type { SigninForm } from '~/types/auth/signin'
 
 const toast = useToast()
+
+const isLoading = ref(false)
+
+const { signIn } = useAuth()
 
 const state = reactive<SigninForm>({
   email: '',
@@ -66,5 +68,11 @@ const validate = (state: SigninForm): FormError[] => {
   }
   if (!state.password) errors.push({ path: 'password', message: 'Required' })
   return errors
+}
+
+const handleSubmit = async () => {
+  isLoading.value = true
+  await signIn(state.email, state.password)
+  isLoading.value = false
 }
 </script>
