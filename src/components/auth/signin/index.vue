@@ -16,6 +16,7 @@
           <CommonPasswordInput
             :model-value="state.password"
             placeholder="Enter your password..."
+            can-show-password
             @update="updatePassword"
           />
         </UFormGroup>
