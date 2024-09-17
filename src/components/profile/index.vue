@@ -26,9 +26,8 @@
         </div>
 
         <NuxtImg
-          class="h-[200px] rounded-full border border-gray-300"
+          class="h-[200px] w-[200px] rounded-full border border-gray-300"
           :src="state.avatar"
-          v-if="state.avatar"
         />
       </div>
 

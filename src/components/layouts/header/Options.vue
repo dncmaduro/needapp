@@ -14,6 +14,13 @@ const { signOut } = useAuth()
 const items = [
   [
     {
+      label: 'Profile',
+      icon: 'i-mdi-account-circle',
+      to: '/profile'
+    }
+  ],
+  [
+    {
       label: 'Sign out',
       icon: 'i-mdi-logout',
       click: () => signOut()
