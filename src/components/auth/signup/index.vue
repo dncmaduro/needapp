@@ -58,6 +58,7 @@ const state = reactive<SignupForm>({
 })
 
 const { signUp } = useAuth()
+const { createProfile } = useProfile()
 
 const updatePassword = (value: string) => {
   state.password = value
@@ -88,7 +89,7 @@ const validate = (state: SignupForm): FormError[] => {
 
 const handleSubmit = async () => {
   isLoading.value = true
-  await signUp(state.email, state.password)
+  const data = await signUp(state.email, state.password)
   isLoading.value = false
 }
 </script>

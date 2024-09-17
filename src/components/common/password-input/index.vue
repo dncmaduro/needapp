@@ -13,6 +13,7 @@
         :icon="isPasswordShow ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
         size="xs"
         class="z-10"
+        v-if="canShowPassword"
         color="white"
         variant="soft"
         @click="togglePassword"
@@ -24,7 +25,9 @@
 <script setup lang="ts">
 import type { PasswordInput } from '~/types/common/password-input'
 
-const props = defineProps<PasswordInput>()
+const props = withDefaults(defineProps<PasswordInput>(), {
+  canShowPassword: false
+})
 
 const isPasswordShow = ref(false)
 

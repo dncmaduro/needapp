@@ -3,7 +3,7 @@
     <UContainer class="flex h-full items-center justify-between">
       <CommonLogo variant="light" />
       <LayoutsHeaderAuth v-if="!userStore.access_token" />
-      <LayoutsHeaderProfile v-else />
+      <LayoutsHeaderOptions v-else />
     </UContainer>
   </div>
 </template>

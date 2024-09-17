@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase',
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt'
+    'pinia-plugin-persistedstate/nuxt',
+    '@samk-dev/nuxt-vcalendar'
   ],
   colorMode: {
     preference: 'light'

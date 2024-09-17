@@ -4,11 +4,12 @@
     <UForm
       :state="state"
       class="mx-auto mt-8 flex w-full max-w-[800px] flex-col items-center gap-6"
+      @submit="handleSubmit"
     >
       <div class="flex w-full justify-between">
         <div class="flex w-[400px] flex-col gap-4">
           <UFormGroup label="Email" name="email" class="w-full">
-            <UInput v-model="email" disabled size="md" />
+            <UInput v-model="profileStore.email" disabled size="md" />
           </UFormGroup>
 
           <UFormGroup label="Name" name="name" class="w-full">
@@ -18,18 +19,37 @@
           <UFormGroup label="Avatar" name="avatar" class="w-full">
             <UInput v-model="state.avatar" placeholder="Enter your avatar..." size="md" />
           </UFormGroup>
+
+          <UFormGroup label="Phone" name="phone" class="w-full">
+            <UInput v-model="state.phone" placeholder="Enter your phone..." size="md" />
+          </UFormGroup>
         </div>
 
-        <NuxtImg class="h-[200px] rounded-full border border-gray-300" :src="state.avatar" />
+        <NuxtImg
+          class="h-[200px] w-[200px] rounded-full border border-gray-300"
+          :src="state.avatar"
+        />
       </div>
 
       <div class="flex w-full justify-between gap-4">
-        <UFormGroup label="Phone" name="phone" class="w-full">
-          <UInput v-model="state.phone" placeholder="Enter your phone..." size="md" />
-        </UFormGroup>
-
         <UFormGroup label="Facebook" name="facebook" class="w-full">
           <UInput v-model="state.facebook" placeholder="Enter your facebook..." size="md" />
+        </UFormGroup>
+
+        <UFormGroup label="Date of Birth" class="w-full">
+          <UPopover :popper="{ placement: 'bottom-start' }" class="w-full">
+            <UButton
+              icon="i-heroicons-calendar-days"
+              :label="format(state.dob, 'MM/dd/yyyy')"
+              color="white"
+              class="w-full"
+              size="md"
+            />
+
+            <template #panel="{ close }">
+              <VDatePicker v-model="state.dob" @close="close" />
+            </template>
+          </UPopover>
         </UFormGroup>
 
         <UFormGroup label="Gender" name="gender" class="w-full">
@@ -48,6 +68,7 @@
           class="w-[120px] justify-center"
           size="md"
           :disabled="!isFormChanged"
+          type="submit"
         />
         <UButton label="Cancel" color="gray" class="w-[120px] justify-center" size="md" />
       </div>
@@ -59,26 +80,69 @@
 import { genderOptions } from '~/constants/profile'
 import type { ProfileForm } from '~/types/profile'
 import { cloneDeep, isEqual } from 'lodash-es'
+import { useUserStore } from '~/store/user'
+import { format } from 'date-fns'
+import { useProfileStore } from '~/store/profile'
 
-const email = ref('a@gmail.com')
+const userStore = useUserStore()
+const profileStore = useProfileStore()
 
-const initialState = reactive<ProfileForm>({
+const { getProfile, createProfile, updateProfile } = useProfile()
+
+const state = reactive<ProfileForm>({
   id: 1,
   created_at: new Date('01/01/2024'),
-  name: 'Tran Manh Dung',
-  phone: '0234567891',
-  gender: 'male',
-  dob: new Date('01/01/2024'),
-  facebook: 'https://facebook.com/maduro3992',
-  avatar: 'https://avatars.githubusercontent.com/u/739984?v=4',
-  account_id: '111'
+  name: '',
+  phone: '',
+  gender: '',
+  dob: new Date(),
+  facebook: '',
+  avatar: '',
+  account_id: ''
 })
 
-const state = reactive(cloneDeep(initialState))
+let initialCopy = cloneDeep(state)
 
-const initialCopy = cloneDeep(state)
+onMounted(async () => {
+  const data = await getProfile(userStore.id)
+  if (!data) {
+    const newData = await createProfile(userStore.id)
+    if (newData) {
+      Object.assign(state, newData)
+      initialCopy = cloneDeep(state)
+    }
+  } else {
+    if (data) {
+      Object.assign(state, data)
+      initialCopy = cloneDeep(state)
+    }
+  }
+})
 
 const isFormChanged = computed(() => {
   return !isEqual(state, initialCopy)
 })
+
+const handleSubmit = async () => {
+  if (isEqual(state, initialCopy)) {
+    return
+  }
+
+  console.log(1)
+
+  const data = await updateProfile(
+    state.account_id,
+    state.avatar,
+    state.facebook,
+    state.dob,
+    state.gender,
+    state.phone,
+    state.name
+  )
+
+  if (data) {
+    Object.assign(state, data)
+    initialCopy = cloneDeep(state)
+  }
+}
 </script>

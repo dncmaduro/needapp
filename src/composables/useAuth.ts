@@ -18,6 +18,7 @@ export const useAuth = () => {
           color: 'green'
         })
         navigateTo('/auth/login')
+        return data
       } else {
         toast.add({
           id: 'Sign up failed!',
@@ -45,7 +46,7 @@ export const useAuth = () => {
           title: 'Sign in successfully!',
           color: 'green'
         })
-        userStore.setAccessToken(data.session.access_token)
+        userStore.setUser(data.session.access_token, data.user.id)
         profileStore.setEmail(email)
         navigateTo('/')
       } else {
@@ -69,7 +70,7 @@ export const useAuth = () => {
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut()
-      userStore.clearAccessToken()
+      userStore.clearUser()
       profileStore.clearEmail()
       navigateTo('/')
       if (error) {
