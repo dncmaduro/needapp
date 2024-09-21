@@ -2,7 +2,11 @@
   <nuxt-link :to="`/newideas/${id}`">
     <UCard
       class="hover:bg-primary-50"
-      :ui="{ header: { background: 'bg-gray-50' }, footer: { padding: 'p-2' } }"
+      :ui="{
+        header: { background: 'bg-gray-50' },
+        footer: { padding: 'py-1.5' },
+        body: { padding: 'py-2' }
+      }"
     >
       <template #header>
         <span class="text-xl font-medium">{{ name }}</span>

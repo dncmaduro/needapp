@@ -3,5 +3,10 @@ export type NewIdeasItem = {
   name: string
   description: string
   access: number
-  profileId: number
+}
+
+export type NewIdeasForm = {
+  name: string
+  description: string
+  images: File[] | null
 }
