@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`/newideas/${id}`">
+  <nuxt-link :to="`/new-ideas/${id}`">
     <UCard
       class="hover:bg-primary-50"
       :ui="{
