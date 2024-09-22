@@ -20,7 +20,7 @@ import type { HomeProjectsItem } from '~/types/home/project'
 const projects = ref<HomeProjectsItem[]>([
   {
     id: 1,
-    href: '/newideas',
+    href: '/new-ideas',
     image: 'https://v2.nuxt.com/preview.png',
     name: 'NewIdeas',
     description:
@@ -30,7 +30,7 @@ const projects = ref<HomeProjectsItem[]>([
   },
   {
     id: 2,
-    href: '/newideas',
+    href: '/new-ideas',
     image: 'https://v2.nuxt.com/preview.png',
     name: 'NewIdeas',
     description:
@@ -40,7 +40,7 @@ const projects = ref<HomeProjectsItem[]>([
   },
   {
     id: 3,
-    href: '/newideas',
+    href: '/new-ideas',
     image: 'https://v2.nuxt.com/preview.png',
     name: 'NewIdeas',
     description:
@@ -50,7 +50,7 @@ const projects = ref<HomeProjectsItem[]>([
   },
   {
     id: 4,
-    href: '/newideas',
+    href: '/new-ideas',
     image: 'https://v2.nuxt.com/preview.png',
     name: 'NewIdeas',
     description:
